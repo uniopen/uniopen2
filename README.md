@@ -1,2 +1,6 @@
 # uniopen2
-UniOpen
+UniOpen2 is now live!
+
+www.uniopen.org
+
+
