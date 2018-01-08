@@ -1,0 +1,72 @@
+{
+  "name": "w-uniopenl",
+  "version": "1.0.0",
+  "description": "Uniopen",
+  "main": "./build/application.js",
+  "scripts": {
+    "start": "npm run clean; npm run build:once; npm run app:run",
+    "build:once": "./node_modules/.bin/tsc",
+    "build:watch": "./node_modules/.bin/tsc --watch",
+    "app:run": "./node_modules/.bin/nf start application=1",
+    "app:watch": "sleep 5; ./node_modules/.bin/supervisor -p 500 -w build/ -e js build/application.js",
+    "dev:uniopen": "node ./src/test/uniopen-server.js",
+    "dev": "npm run clean; npm run build:once; npm run watch",
+    "watch": "./node_modules/.bin/concurrently \"npm run build:watch\" \"npm run app:watch\"",
+    "test:obj": "npm run build:once && node ./build/test/handlertest.js",
+    "clean": "rm -rf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/uniwhere/w-uniopen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/uniwhere/w-uniopen#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "bson": "^1.0.4",
+    "cheerio": "^1.0.0-rc.2",
+    "dotenv": "^4.0.0",
+    "hapi": "^17.1.1",
+    "hasha": "^3.0.0",
+    "inversify": "^4.3.0",
+    "ioredis": "^3.1.4",
+    "joi": "^11.3.4",
+    "knex": "^0.13.0",
+    "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.19.1",
+    "mongodb": "^2.2.33",
+    "node-fetch": "^1.7.3",
+    "postal": "^2.0.5",
+    "reflect-metadata": "^0.1.10",
+    "uuid": "^3.1.0",
+    "winston": "^2.4.0"
+  },
+  "engines": {
+    "node": "8.9.1",
+    "npm": "5.5.1"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.15",
+    "@types/dotenv": "^4.0.1",
+    "@types/hasha": "^3.0.0",
+    "@types/inversify": "^2.0.33",
+    "@types/ioredis": "0.0.25",
+    "@types/joi": "^10.4.3",
+    "@types/knex": "0.0.61",
+    "@types/lodash": "^4.14.77",
+    "@types/mkdirp": "^0.5.1",
+    "@types/mongodb": "^2.2.16",
+    "@types/node-fetch": "^1.6.7",
+    "@types/object-hash": "^0.5.29",
+    "@types/uuid": "^3.4.2",
+    "@types/winston": "^2.3.6",
+    "concurrently": "^3.5.0",
+    "foreman": "^2.0.0",
+    "supervisor": "^0.12.0",
+    "tslint": "^5.7.0",
+    "typescript": "2.5.3"
+  }
+}
