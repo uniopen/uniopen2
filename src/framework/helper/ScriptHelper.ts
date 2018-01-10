@@ -71,6 +71,8 @@ export class ScriptHelper {
             parseUrl: this.parseUrl,
             parseHtml: this.parseHtml,
 
+            normalizeTimetable: this.normalizeTimetable,
+
             commitData: this.commitData,
             partialData: this.partialData,
             callGrabber: this.callGrabber,
@@ -127,5 +129,28 @@ export class ScriptHelper {
 
     private parseUrl = (url: string) => {
         return parse(url);
+    }
+
+    private normalizeTimetable = (str: string, type?: number) => {
+      let formatted = str.toLowerCase()
+        .replace(/lunedì/i, 'lun')
+        .replace(/martedì/i, 'mar')
+        .replace(/mercoledì/i, 'mer')
+        .replace(/giovedì/i, 'gio')
+        .replace(/venerdì/i, 'ven')
+        .replace(/sabato/i, 'sab')
+        .replace(/domenica/i, 'dom')
+        .replace(/([A-Za-z])[^\w]+(\d)/, '$1 $2')
+        .replace(/(\d)[^0-9 -]+(\d)/g, '$1:$2')
+        .replace(/(\s\d+)(\s|$)/, '$1:00')
+        .replace(/(\d+)[^\w:]+(\d+)/, '$1 - $2');
+      switch (type) {
+        case 1:
+          formatted = formatted.replace(/([A-Za-z])(?:[^\w]+([A-Za-z]))+/g, '$1, $2');
+          break;
+        default:
+          formatted = formatted.replace(/([A-Za-z]+)[^\w]+([A-Za-z]+)/, '$1 - $2');
+      }
+      return formatted.trim();
     }
 }

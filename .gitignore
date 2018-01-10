@@ -1,0 +1,28 @@
+### Node ###
+# Logs
+logs
+**/*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+**/.DS_Store
+
+build
+src/**/*.log
+nodemon.json
+
+# Dependency directories
+node_modules
+
+**/*.pdf
+.vscode
+
+# Environment files
+src/**/*.env*
+
+.env
