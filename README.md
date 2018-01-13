@@ -28,7 +28,7 @@ First of all in your machine you'll need to have these software up and running:
 * Download Redis for windows from <a href="github.com/MicrosoftArchive/redis">here<a> (if you download the .zip file instead of .msi, installation isn't required).
 * Download and install the latest version of Node from <a href="https://nodejs.org/">here<a>
 * Clone or download this repo and initialize it by running the following command in the terminal into the project folder ```npm install```
-  
+
 #### Launch
 In order to launch the project you have first to open MongoDB and Redis, finally you can open Uniopen:
 * MongoDB: open a terminal and run ```"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe"```
@@ -50,7 +50,8 @@ Open your web browser and go to http://127.0.0.1:5000/api/find-all to see the li
 ### How to implement your own grabber
 
 #### Create a grabber
-todo (guide + example)
+todo (guide)<br>
+You can find some examples in ```grabber/unive```
 
 #### Set the grabber into the project
 todo (where to put the initial links and grabber folder)

@@ -23,7 +23,12 @@ export class ServicesDb {
                     type: 'mensa',
                     code: 'default',
                     urls: ['http://www.esuvenezia.it/web/esuvenezia/servizi/servizi-interna?p_p_id=ALFRESCO_MYPORTAL_CONTENT_PROXY_WAR_myportalportlet_INSTANCE_l6Hb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&template=/regioneveneto/myportal/html-generico-detail&uuid=01acd1dc-bf22-431d-b07c-a72f3535c498&contentArea=_ESUVenezia_servizi-interna_Body1_&selVert=menu-contestuale_709349e4-ef47-4251-bb50-624e4b22da37'],
-                }],
+                },
+                {
+                    type: 'biblio',
+                    code: 'default',
+                    urls: ['http://www.unive.it/pag/4750/'],
+                },],
             }];
         });
     }
