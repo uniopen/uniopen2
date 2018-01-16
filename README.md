@@ -101,10 +101,8 @@ Open your web browser and go to http://127.0.0.1:5000/api/find-all to see the li
 ### How to implement your own grabber
 
 #### Create a grabber
-######(TODO)<br>
-You can find some examples in
-  * ```grabber/unive```
-  * ```grabber/unipd```
+#####TODO: guide)<br>
+You can find some examples in ```grabber``` folder
 
 #### Set the grabber into the project
-######(TODO: where to put the initial links and grabber folder)
+#####TODO: where to put the initial links and grabber folder)
