@@ -8,13 +8,18 @@ export class ServicesDb {
                 id: '3d540092-1e28-44eb-bda9-4558116b02c6',
                 code: 'unipd',
                 name: 'Università degli studi di Padova',
-                objects: [/*{
+                objects: [
+                  {
                     type: 'studio',
-                    url: '',
-                }, {
+                    code: 'default',
+                    urls: ['http://www.unipd.it/aule-studio'],
+                  },
+                  {
                     type: 'biblio',
-                    url: '',
-                }*/],
+                    code: 'start',
+                    urls: ['http://bibliotecadigitale.cab.unipd.it/biblioteche/elenco-delle-biblioteche'],
+                  },
+                ],
             }, {
                 id: '0819d80a-39dc-4d7f-80ab-9071d97ee73b',
                 code: 'unive',

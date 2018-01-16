@@ -35,13 +35,64 @@ In order to launch the project you have first to open MongoDB and Redis, finally
 * Redis: simply double click ```redis-server.exe```
 * Uniopen: open a terminal into Uniopen's folder and run ```node .\build\application.js```
 
-### Linux/MacOS
+### MacOS
 
 #### Installation and configuration
-todo
+The simplest way to install all the necessary software is through [Homebrew](https://brew.sh/index_it.html). So first of all paste
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+to install that. Then run ```brew update``` to make sure Homebrew is up to date.
+Now you can install
+* Nodejs with
+  ```
+  brew install node
+  ```
+* Redis with
+  ```
+  brew install redis
+  ```
+
+* MongoDB with
+  ```
+  brew install mongodb
+  ```
+  Then you also need to run ```mkdir -p /data/db``` to create the default /data/db directory.
 
 #### Launch
-todo
+In order to launch the project you have first to open MongoDB and Redis, finally you can open Uniopen:
+* MongoDB - open a terminal and run ```mongod``` and keep it running
+* Redis - open another terminal run ```redis-server```
+* Uniopen - open a third terminal, go into project cloned directory and run ```npm run dev```
+
+### Linux
+
+#### Installation and configuration
+
+* Nodejs can be installed via package manager.<br>
+  You can find the right way to do that depending on your current distribution on the official nodejs page https://nodejs.org/en/download/package-manager/
+
+* The suggested way of installing Redis is compiling it from sources follow this simple steps
+  ```
+  wget http://download.redis.io/redis-stable.tar.gz
+  tar xvzf redis-stable.tar.gz
+  cd redis-stable
+  make
+  ```
+  After the compilation the src directory inside the Redis distribution is populated with the different executables. It is a good idea to copy both the Redis server and the command line interface in proper places, either manually using the following commands:
+  ```
+  sudo cp src/redis-server /usr/local/bin/
+  sudo cp src/redis-cli /usr/local/bin/
+  ```
+  Or just using `sudo make install`
+
+* For the best installation experience, MongoDB provides packages for popular Linux distributions. You can find the installation process guides [here](https://docs.mongodb.com/manual/administration/install-on-linux/)
+
+#### Launch
+In order to launch the project you have first to open MongoDB and Redis, finally you can open Uniopen:
+* MongoDB - open a terminal and run ```sudo service mongod start``` and keep it running
+* Redis - open another terminal run ```redis-server```
+* Uniopen - open a third terminal, go into project cloned directory and run ```npm run dev```
 
 ## API
 Now you are ready to use Uniopen!<br>
@@ -50,8 +101,10 @@ Open your web browser and go to http://127.0.0.1:5000/api/find-all to see the li
 ### How to implement your own grabber
 
 #### Create a grabber
-todo (guide)<br>
-You can find some examples in ```grabber/unive```
+######(TODO)<br>
+You can find some examples in
+  * ```grabber/unive```
+  * ```grabber/unipd```
 
 #### Set the grabber into the project
-todo (where to put the initial links and grabber folder)
+######(TODO: where to put the initial links and grabber folder)
