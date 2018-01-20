@@ -100,9 +100,43 @@ Open your web browser and go to http://127.0.0.1:5000/api/find-all to see the li
 
 ### How to implement your own grabber
 
-#### Create a grabber
-#####TODO: guide<br>
 You can find some examples in ```grabber``` folder
 
-#### Set the grabber into the project
-#####TODO: where to put the initial links and grabber folder
+You may think about this project as something like a crawler, for each university it has a set of urls and grabbers. 
+Usually these urls represent main pages of different categories (i.e. libraries or canteens), for each page you need to create a grabber, that pick up all the informations it can find (i.e. a list of libraries where each of them have a link to the details page), then it commits partial information, it uses relative links to open other pages and so on, until it has all the necessary data to fill the DB.
+
+Let's get started with the actual instructions:
+
+* open ```src/service/temp/services.db.ts```, as you can see, in this file there is an array that contains a list of universities, each of them contains an array of objects that represent different categories. If you want to add a grabber, you have to put in the relative university's array (if your university is not present, simply add it with the same structure of the others) a new object with: 
+  * type: the name of the chosen category, also the name of the folder where you have to put your grabber. 
+  * code: the name of the main grabber for the category. 
+  * urls: the list of urls necessary to your grabber.
+
+* now you have to create your grabber file into ```grabber/[university code]/[category code]/```, and place your code into a function that will receive urls as a parameter.
+For example:
+```javascript
+(function (args) {
+  return httpGet(args.url).then((res) => {
+        return res.text();
+    }).then((source) => {
+        let $ = parseHtml(source);
+        
+        [use jquery-like code to get your data from $]
+        let url = [object's url]  //i.e. library's details url
+        let key = [object's key]  //i.e. library's short name
+        
+        //use partialData() if you don't have all the informations and next call a specifica grabber with callGrabber()
+        partialData(args.uni, args.type, args.code, url, key, { [put partial data here] });
+        callGrabber(args.uni, args.type, grabberCode, href, key);   
+        
+        //else, if you have all the necessary you can use commitData()
+        commitData(args.uni, args.type, args.code, args.url, args.key, { [put data here] });
+    }).catch((err) => {
+        console.error(err.message, err.stack);
+    });
+});
+```
+
+####TODO: api (spiegare bene partialData, commitData, callGrabber)
+
+####TODO: object validation (spiegare la struttura che devono avere gli oggetti)
