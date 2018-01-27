@@ -94,22 +94,22 @@ In order to launch the project you have first to open MongoDB and Redis, finally
 * Redis - open another terminal run ```redis-server```
 * Uniopen - open a third terminal, go into project cloned directory and run ```npm run dev```
 
-## API
+### Use
 Now you are ready to use Uniopen!<br>
 Open your web browser and go to http://127.0.0.1:5000/api/find-all to see the list of the currently implemented grabbers.
 
-### How to implement your own grabber
+## How to implement your own grabber
 
 You can find some examples in ```grabber``` folder
 
-You may think about this project as something like a crawler, for each university it has a set of urls and grabbers. 
+You may think about this project as something like a crawler, for each university it has a set of urls and grabbers.
 Usually these urls represent main pages of different categories (i.e. libraries or canteens), for each page you need to create a grabber, that pick up all the informations it can find (i.e. a list of libraries where each of them have a link to the details page), then it commits partial information, it uses relative links to open other pages and so on, until it has all the necessary data to fill the DB.
 
 Let's get started with the actual instructions:
 
-* open ```src/service/temp/services.db.ts```, as you can see, in this file there is an array that contains a list of universities, each of them contains an array of objects that represent different categories. If you want to add a grabber, you have to put in the relative university's array (if your university is not present, simply add it with the same structure of the others) a new object with: 
-  * type: the name of the chosen category, also the name of the folder where you have to put your grabber. 
-  * code: the name of the main grabber for the category. 
+* open ```src/service/temp/services.db.ts```, as you can see, in this file there is an array that contains a list of universities, each of them contains an array of objects that represent different categories. If you want to add a grabber, you have to put in the relative university's array (if your university is not present, simply add it with the same structure of the others) a new object with:
+  * type: the name of the chosen category, also the name of the folder where you have to put your grabber.
+  * code: the name of the main grabber for the category.
   * urls: the list of urls necessary to your grabber.
 
 * now you have to create your grabber file into ```grabber/[university code]/[category code]/```, and place your code into a function that will receive urls as a parameter.
@@ -120,15 +120,15 @@ For example:
         return res.text();
     }).then((source) => {
         let $ = parseHtml(source);
-        
-        [use jquery-like code to get your data from $]
-        let url = [object's url]  //i.e. library's details url
-        let key = [object's key]  //i.e. library's short name
-        
+
+        // [use jquery-like code to get your data from $]
+        let url = [objects_url]  // i.e. library's details url
+        let key = [objects_key]  // i.e. library's short name
+
         //use partialData() if you don't have all the informations and next call a specifica grabber with callGrabber()
         partialData(args.uni, args.type, args.code, url, key, { [put partial data here] });
         callGrabber(args.uni, args.type, grabberCode, href, key);   
-        
+
         //else, if you have all the necessary you can use commitData()
         commitData(args.uni, args.type, args.code, args.url, args.key, { [put data here] });
     }).catch((err) => {
@@ -137,6 +137,81 @@ For example:
 });
 ```
 
-####TODO: api (spiegare bene partialData, commitData, callGrabber)
+#### Grabber Helpers APIs
+As you may have notice in the grabber code example there are some function that you can consider like some API helpers that we provide to integrate your grabber into our uniopen2 proposed flow. These are:
+*
+#####  `callGrabber( uni, type, code, url, [key], [raw] )` <br>
+Call another grabber. Useful if your information is fragmented into multiple pages or other cases relative to informations partitioning.<br>
+Function parameters are:
+ * `uni`  - string that identify university (eg. unipd, unive, ... )
+ * `type` - string that identify the type of information parsed (see [`types`](#Object-validation-types))
+ * `code` - reference to grabber file name (eg. default, iniziative-venete, ...)
+ * `url` - url to be parsed from the called grabber
+ * `key` - optional string identifying parsed object store key (usually generated through helper function `rawkey`);
+ * `raw` - optional data object useful if you need to share something with the new grabber
 
-####TODO: object validation (spiegare la struttura che devono avere gli oggetti)
+##### `partialData( uni, type, code, url, key, [raw] )`
+Used when you can submit only partial data, maybe because you must call another grabber to complete information retrieval. <br>
+Function parameters are:
+ * `uni`  - current university code accessible by `args.uni`
+ * `type` - parsed information type (see [`types`](#Object-validation-types))
+ * `code` - current grabber filename accessible by `args.code`
+ * `url` - url associate to parsed data
+ * `key` - string identifying parsed object store key (usually generated through helper function `rawkey` or, if already present by previus flow calls, accessible by `args.key`);
+ * `raw` - object contain raw parsed information that will be saved
+
+##### `commitData( uni, type, code, url, key, raw )`
+Function that commits the data passed in the raw param. Stop the current grabber(s) flow and try to validate raw object, according with selected type, then store it. <br>
+Function parameters are:
+* `uni`  - current university code accessible by `args.uni`
+* `type` - parsed information type (see [`types`](#Object-validation-types)) ( current accessible by `args.type` )
+* `code` - current grabber filename accessible by `args.code`
+* `url` - url associate to parsed data
+* `key` - string identifying parsed object store key (usually generated through helper function `rawkey` or, if already present by previus flow calls, accessible by `args.key`);
+* `raw` - object contain raw parsed information that will be saved
+
+#### Object validation types
+
+Until now we provide a basic support to grabber based on 3 types:
+
+##### `mensa`
+Object representing canteens.<br>
+To be valid needs to have following data:
+* [__required__ string] `nome`  - canteen's name
+* [__required__ string] `indirizzo` - canteen's address
+* [string] `note` - optional notes
+
+##### `studio`
+Object representing places dedicated to personal study. <br>
+To be valid needs to have following data:
+* [__required__ string] `nome` -  place's name
+* [__required__ string] `indirizzo` - place's address
+* [number] `posti` -  room capacity
+* [timetable] `orari` - timetable follow a specific format type
+* [string] `note` - optional notes
+
+##### `biblio`
+Object representing library. <br>
+To be valid needs to have following data:
+* [__required__ string] `nome` -  library's name
+* [__required__ string] `indirizzo` -  library's address
+* [number] `posti` -  room capacity
+* [timetable] `orari` - timetable follow a specific format type
+* [string] `note` - optional notes
+
+###### special validation types
+###### `timetable`
+It's an array containing from 1 to 7 element formatted in one of follows options:
+```
+// days interval
+lun - ven 10:30 - 11:20
+
+// single day
+gio 10:20 - 11:20
+
+// multiple days
+mer, sab, dom 17:00 - 14:00
+
+```
+valid days names are `lun`, `mar`, `mer`, `gio`, `ven`, `sab`, `dom`<br>
+We provide an helper function that you can use to translate a string like `lunedì - giovedì 11 - 21` to an accepted format (see [normalizeTimetable](https://github.com/uniopen/uniopen2/blob/5c563d65035f248b88b61579e877e4f42931f6c7/src/framework/helper/ScriptHelper.ts#L134) )
