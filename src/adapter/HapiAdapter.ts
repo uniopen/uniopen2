@@ -54,7 +54,7 @@ export class HapiAdapter implements IComponent {
     private apiRoute(): Promise<void> {
         return Promise.try(() => {
             // ['GET', 'POST', 'PUT', 'DELETE']
-            return this.hapi.addRoute('*', '/api/{service}', this.apiHandler);
+            return this.hapi.addRoute('*', '/api/{service}/{data*}', this.apiHandler);
         });
     }
 
@@ -64,7 +64,7 @@ export class HapiAdapter implements IComponent {
 
     private apiHandler = (req: IServerRequest) => {
         // TODO: usare i tipi corretti "IActionInput"
-        return this.rest.run({ action: req.params.service });
+        return this.rest.run({ action: req.params.service, body: req.params.data });
     }
 
 }

@@ -51,6 +51,20 @@ export class ServicesDb {
             });
     }
 
+    public static supportedObj(): Promise<any[]> {
+        return ServicesDb.findAll().
+            then((services: any[]) => {
+                let list: any = {};
+                each(services, (service: any) => {
+                    list[service.code] = new Array();
+                    each(service.objects, (object: any) => {
+                        list[service.code].push(object.type);
+                    });
+                });
+                return list;
+            });
+    }
+
     public static findUrls(uni: string, type: string): Promise<any[]> {
         return ServicesDb.findAll()
             .then((services: any[]) => {
