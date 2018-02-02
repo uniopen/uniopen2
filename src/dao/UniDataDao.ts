@@ -1,7 +1,8 @@
 import { IUniData } from '../domain/IUniData';
 import * as Promise from 'bluebird';
-import { inject, injectable } from 'inversify';
-import { Collection, DeleteWriteOpResultObject, FindAndModifyWriteOpResultObject, InsertOneWriteOpResult, ObjectId, UpdateWriteOpResult } from 'mongodb';
+import { inject, injectable } from 'inversify'; import { Collection,
+DeleteWriteOpResultObject, FindAndModifyWriteOpResultObject,
+InsertOneWriteOpResult, ObjectId, UpdateWriteOpResult } from 'mongodb';
 
 import { IConfigManager } from '../framework/config/IConfigManager';
 import { Mongodb } from '../framework/driver/db/Mongodb';
@@ -119,6 +120,15 @@ export class UniDataDao implements IAsyncInit {
                     console.error(err.message, err.stack);
                     return reject(err);
                 });
+        });
+    }
+
+    public getAllWith(values: any, filter = {}): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            return this.collection.find(values, filter).toArray((err, result) => {
+              if (err) { reject(err); }
+              resolve(result);
+            });
         });
     }
 

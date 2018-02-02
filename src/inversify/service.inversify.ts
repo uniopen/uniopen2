@@ -7,6 +7,7 @@ import { EndpointService } from '../service/object/EndpointService';
 import { GrabberService } from '../service/object/GrabberService';
 import { FindAllAction } from '../service/rest/FindAllAction';
 import { FullScanAction } from '../service/rest/FullScanAction';
+import { GetDataAction } from '../service/rest/GetDataAction';
 import { putSymbol } from './_helper';
 
 const ServiceModule = new ContainerModule((bind: interfaces.Bind) => {
@@ -23,6 +24,7 @@ const ServiceModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<RestManager>(putSymbol('RestManager')).to(RestManager);
     bind<FindAllAction>(putSymbol('FindAllAction')).to(FindAllAction);
     bind<FullScanAction>(putSymbol('FullScanAction')).to(FullScanAction);
+    bind<GetDataAction>(putSymbol('GetDataAction')).to(GetDataAction);
     //#endregion
 });
 
