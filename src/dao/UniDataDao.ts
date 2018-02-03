@@ -123,8 +123,8 @@ export class UniDataDao implements IAsyncInit {
         });
     }
 
-    public getAllWith(values: any, filter = {}): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
+    public getAllWith(values: object, filter = {}): Promise<IUniData[]> {
+        return new Promise<IUniData[]>((resolve, reject) => {
             return this.collection.find(values, filter).toArray((err, result) => {
               if (err) { reject(err); }
               resolve(result);
