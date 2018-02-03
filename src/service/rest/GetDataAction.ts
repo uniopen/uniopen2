@@ -33,9 +33,10 @@ export class GetDataAction implements IComponent {
                 .then((value: any) => value[data[0]] ? value[data[0]] : []);
             }
             return data.length > 2 ?
-              this.uniData.getAllWith({ id : data[2] }, {_id: 0, key: 0})
+              this.uniData.getAllWith({ id : data[2] }, {_id: 0, key: 0, uni: 0, type: 0})
               .then((vl) => vl.length ? vl[0].obj : [] )  :
-              this.uniData.getAllWith({ uni : data[0], type: data[1] }, {_id: 0, key: 0});
+              this.uniData.getAllWith({ uni : data[0], type: data[1] },
+                {_id: 0, key: 0, uni: 0, type: 0});
         });
     }
 
