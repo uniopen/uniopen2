@@ -28,6 +28,7 @@ First of all in your machine you'll need to have these software up and running:
 * Download Redis for windows from <a href="github.com/MicrosoftArchive/redis">here<a> (if you download the .zip file instead of .msi, installation isn't required).
 * Download and install the latest version of Node from <a href="https://nodejs.org/">here<a>
 * Clone or download this repo and initialize it by running the following command in the terminal into the project folder ```npm install```
+* Rename .env.dev file into .env and setup your configuration parameters
 
 #### Launch
 In order to launch the project you have first to open MongoDB and Redis, finally you can open Uniopen:
