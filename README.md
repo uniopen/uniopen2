@@ -60,6 +60,9 @@ Now you can install
   ```
   Then you also need to run ```mkdir -p /data/db``` to create the default /data/db directory.
 
+* Clone or download this repo and initialize it by running the following command in the terminal into the project folder ```npm install```
+* Rename .env.dev file into .env and setup your configuration parameters
+
 #### Launch
 In order to launch the project you have first to open MongoDB and Redis, finally you can open Uniopen:
 * MongoDB - open a terminal and run ```mongod``` and keep it running
@@ -88,6 +91,10 @@ In order to launch the project you have first to open MongoDB and Redis, finally
   Or just using `sudo make install`
 
 * For the best installation experience, MongoDB provides packages for popular Linux distributions. You can find the installation process guides [here](https://docs.mongodb.com/manual/administration/install-on-linux/)
+
+
+* Clone or download this repo and initialize it by running the following command in the terminal into the project folder ```npm install```
+* Rename .env.dev file into .env and setup your configuration parameters
 
 #### Launch
 In order to launch the project you have first to open MongoDB and Redis, finally you can open Uniopen:
