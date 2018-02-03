@@ -27,7 +27,7 @@ export class GetDataAction implements IComponent {
     public run(input: any): Promise<any> {
         return Promise.try(() => {
             if (!input) {  return ServicesDb.supportedObj(); }
-            let data = trimEnd(input, '/').split('/');
+            let data: any[] = trimEnd(input, '/').split('/');
             if (data.length === 1) {
               return ServicesDb.supportedObj()
                 .then((value: any) => value[data[0]] ? value[data[0]] : []);

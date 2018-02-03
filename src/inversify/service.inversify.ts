@@ -8,6 +8,7 @@ import { GrabberService } from '../service/object/GrabberService';
 import { FindAllAction } from '../service/rest/FindAllAction';
 import { FullScanAction } from '../service/rest/FullScanAction';
 import { GetDataAction } from '../service/rest/GetDataAction';
+import { GrabberScanAction } from '../service/rest/GrabberScanAction';
 import { putSymbol } from './_helper';
 
 const ServiceModule = new ContainerModule((bind: interfaces.Bind) => {
@@ -25,6 +26,8 @@ const ServiceModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<FindAllAction>(putSymbol('FindAllAction')).to(FindAllAction);
     bind<FullScanAction>(putSymbol('FullScanAction')).to(FullScanAction);
     bind<GetDataAction>(putSymbol('GetDataAction')).to(GetDataAction);
+    bind<GrabberScanAction>(putSymbol('GrabberScanAction')).to(GrabberScanAction);
+
     //#endregion
 });
 
