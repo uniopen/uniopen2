@@ -10,6 +10,7 @@ import { getSymbol, PRIORITY_LOW } from '../../inversify/_helper';
 import { FindAllAction } from '../rest/FindAllAction';
 import { FullScanAction } from '../rest/FullScanAction';
 import { GetDataAction } from '../rest/GetDataAction';
+import { GrabberScanAction } from '../rest/GrabberScanAction';
 
 @injectable()
 export class RestManager implements IComponent {
@@ -21,7 +22,8 @@ export class RestManager implements IComponent {
         @inject(getSymbol('LoggerManager')) private log: ILoggerManager,
         @inject(getSymbol('FindAllAction')) private findAll: FindAllAction,
         @inject(getSymbol('FullScanAction')) private fullScan: FullScanAction,
-        @inject(getSymbol('GetDataAction')) private get: GetDataAction) { }
+        @inject(getSymbol('GetDataAction')) private get: GetDataAction,
+        @inject(getSymbol('GrabberScanAction')) private grabber: GrabberScanAction) { }
 
     @asyncInit(PRIORITY_LOW)
     public init(): Promise<void> {
@@ -52,6 +54,7 @@ export class RestManager implements IComponent {
                 'full-scan': (args: any) => this.fullScan.run(args),
                 'find-all': (args: any) => this.findAll.run(args),
                 'get': (args: any) => this.get.run(args),
+                'grabber': (args: any) => this.grabber.run(args),
             };
         });
     }
