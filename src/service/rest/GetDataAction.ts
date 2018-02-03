@@ -30,10 +30,11 @@ export class GetDataAction implements IComponent {
             let data = trimEnd(input, '/').split('/');
             if (data.length === 1) {
               return ServicesDb.supportedObj()
-                .then((value) => value[data[0]] ? value[data[0]] : []);
+                .then((value: any) => value[data[0]] ? value[data[0]] : []);
             }
             return data.length > 2 ?
-              this.uniData.getAllWith({ id : data[2] }, {_id: 0, key: 0}) :
+              this.uniData.getAllWith({ id : data[2] }, {_id: 0, key: 0})
+              .then((vl) => vl.length ? vl[0].obj : [] )  :
               this.uniData.getAllWith({ uni : data[0], type: data[1] }, {_id: 0, key: 0});
         });
     }

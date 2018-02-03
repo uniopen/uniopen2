@@ -62,9 +62,18 @@ export class HapiAdapter implements IComponent {
         return h.response('Invalid request').code(400);
     }
 
-    private apiHandler = (req: IServerRequest) => {
+    private apiHandler = (req: IServerRequest, h: IServerResponse) => {
         // TODO: usare i tipi corretti "IActionInput"
-        return this.rest.run({ action: req.params.service, body: req.params.data });
+        return this.rest.run({ action: req.params.service, body: req.params.data })
+        .then((value) => h
+          .response({ statusCode: 200, message: value })
+          .code(200),
+        )
+        .catch((err) => h
+          .response({ statusCode: 404, error: 'Not Found', message: 'Not Found'})
+          .code(404),
+        );
+
     }
 
 }
