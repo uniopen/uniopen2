@@ -26,3 +26,9 @@ node_modules
 src/**/*.env*
 
 .env
+
+# Redis backup files
+*.rdb
+
+# Mongo data
+data

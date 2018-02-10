@@ -26,14 +26,13 @@ export class GetDataAction implements IComponent {
 
     public run(input: any): Promise<any> {
         return Promise.try(() => {
-            if (!input) {  return ServicesDb.supportedObj(); }
+            if (!input) {  return this.uniData.getCurrentContent(); }
             let data: any[] = trimEnd(input, '/').split('/');
             if (data.length === 1) {
-              return ServicesDb.supportedObj()
-                .then((value: any) => value[data[0]] ? value[data[0]] : []);
+              return this.uniData.getCurrentContent(data[0]);
             }
             return data.length > 2 ?
-              this.uniData.getAllWith({ id : data[2] }, {_id: 0, key: 0, uni: 0, type: 0})
+              this.uniData.getAllWith({ uni: data[0], type: data[1], id : data[2] }, {_id: 0, key: 0, uni: 0, type: 0})
               .then((vl) => vl.length ? vl[0].obj : [] )  :
               this.uniData.getAllWith({ uni : data[0], type: data[1] },
                 {_id: 0, key: 0, uni: 0, type: 0});

@@ -132,4 +132,18 @@ export class UniDataDao implements IAsyncInit {
         });
     }
 
+    public getCurrentContent(value?: string): Promise<any> {
+      return new Promise<any>((resolve, reject) => {
+        return this.collection.aggregate([
+          { $match: { uni : value ? value : { $exists: true } }},
+          { $group: {_id: '$uni', data: {$addToSet: '$type'}}},
+          { $project: { _id: 0, uni: '$_id', data: 1 }},
+        ])
+        .toArray((err, result) => {
+          if (err) { reject(err); }
+          resolve(value && result.length === 1 ? result[0] : result );
+        });
+      });
+    }
+
 }

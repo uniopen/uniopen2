@@ -13,13 +13,32 @@ In this repo you can find a base architecture that handles the flow of starting 
 
 Following these instruction you will be able to run a copy of the project on your local machine and to create and start your first data grabber.
 
-### Prerequisites
+We set up a docker-compose configuration that provides to build a network with redis, mongo and nodejs and let you focus only on grabber creation.
 
-First of all in your machine you'll need to have these software up and running:
+Anyway if you prefer a docker use of the project you'll need to have these software up and running:
 * Node.js - https://nodejs.org/
 * MongoDB - https://www.mongodb.com
 * Redis   - https://redis.io/
 
+We will guide you through both of use cases.
+
+### Docker ( Linux, MacOS, Windows )
+
+First of all we assume that you have docker and docker-compose installed.
+If it's not your case, follow installation guide on https://docs.docker.com/compose/install/
+
+Now clone or download this repo and run
+````
+docker-compose up
+````
+
+You can now create your personal grabber simply working on grabber folder.
+
+To stop, open another terminal and use `docker-compose down` command.
+
+Notes:
+* first time `docker-compose up` may take some time because it has to download all node, mongo and redis images
+* for more info on what docker is and how it works refer to https://www.docker.com/what-docker
 
 ### Windows
 
@@ -102,9 +121,55 @@ In order to launch the project you have first to open MongoDB and Redis, finally
 * Redis - open another terminal run ```redis-server```
 * Uniopen - open a third terminal, go into project cloned directory and run ```npm run dev```
 
-### Use
+## Use
 Now you are ready to use Uniopen!<br>
-Open your web browser and go to http://127.0.0.1:5000/api/find-all to see the list of the currently implemented grabbers.
+Open your web browser and go to 127.0.0.1:5000/api/[service]<br>
+
+Available services are:
+##### `find-all`
+return currently implemented grabbers
+##### `full-scan`
+start all currently implemented grabbers
+##### `grabber[/uni][/type]`
+start only a specific grabber following the request pattern. If not type provided start all uni associate grabbers. If called without uni and type works like full-scan.
+##### `get[/uni][/type][/obj_id]`
+data consulting service.
+* `get` without params return an array of object {uni, data[]} with all uni and associate data types in the current mongo collection, if no data return an empty array.
+```
+ {
+   "statusCode":200,
+   "message":
+    [
+      {"data":["mensa"],"uni":"unive"},
+      {"data":["biblio"],"uni":"unipd"}
+    ]
+  }
+```
+* `get/uni` return an object {uni, data[]} relative to required uni.
+```
+ {
+   "statusCode":200,
+   "message": {"data":["biblio"],"uni":"unipd"}
+ }
+```
+* `get/uni/type` return an array of all objects of required uni/type
+```
+ {
+   "statusCode":200,
+   "message":
+    [
+      {
+        "id": "419ae894-5e31-462b-aa81-b71ecba80f68",
+        "obj": {
+          "nome": "Biblioteca Slavistica e Ungherese",
+          "indirizzo": "Via Prosdocimo Beldomandi, 1 - 35137 Padova",
+          "posti": 24
+        }
+      }
+      // ...
+    ]
+```
+* `get/uni/type/id` return specified object data
 
 ## How to implement your own grabber
 

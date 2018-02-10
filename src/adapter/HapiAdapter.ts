@@ -59,7 +59,7 @@ export class HapiAdapter implements IComponent {
     }
 
     private homeHandler = (req: IServerRequest, h: IServerResponse) => {
-        return h.response('Invalid request').code(400);
+        return h.response('Welcome to uo2 api').code(200);
     }
 
     private apiHandler = (req: IServerRequest, h: IServerResponse) => {

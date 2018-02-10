@@ -1,0 +1,35 @@
+version: '2'
+
+volumes:
+  node:
+
+services:
+  uo2:
+    build: .
+    command: npm run dev
+    ports:
+      - '127.0.0.1:5000:5000'
+    volumes:
+      - ./src:/uo2/src/
+      - ./grabber:/uo2/grabber
+      - node:/uo2/node_modules
+    links:
+      - redis
+      - mongodb
+    depends_on:
+      - redis
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - './data:/data/db'
+    expose:
+      - '27017'
+    command: mongod --smallfiles --logpath=/dev/null
+
+  redis:
+    image: redis:latest
+    expose:
+      - '6379'
+    command: redis-server 
