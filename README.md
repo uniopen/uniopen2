@@ -15,7 +15,7 @@ Following these instruction you will be able to run a copy of the project on you
 
 We set up a docker-compose configuration that provides to build a network with redis, mongo and nodejs and let you focus only on grabber creation.
 
-Anyway if you prefer a docker use of the project you'll need to have these software up and running:
+Anyway if you prefer a no-docker use of the project you'll need to have these software up and running:
 * Node.js - https://nodejs.org/
 * MongoDB - https://www.mongodb.com
 * Redis   - https://redis.io/
