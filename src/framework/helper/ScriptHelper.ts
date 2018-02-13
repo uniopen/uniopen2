@@ -14,6 +14,7 @@ import { Bus } from '../driver/msg/Bus';
 import { ILoggerManager } from '../logger/ILoggerManager';
 import { HashHelper } from './HashHelper';
 import { HttpHelper } from './HttpHelper';
+import * as fs from 'fs';
 
 @injectable()
 export class ScriptHelper {
@@ -133,16 +134,16 @@ export class ScriptHelper {
 
     private normalizeTimetable = (str: string, type?: number) => {
       let formatted = str.toLowerCase()
-        .replace(/lunedì/i, 'lun')
-        .replace(/martedì/i, 'mar')
-        .replace(/mercoledì/i, 'mer')
-        .replace(/giovedì/i, 'gio')
-        .replace(/venerdì/i, 'ven')
+        .replace(/luned(ì|i)/i, 'lun')
+        .replace(/marted(ì|i)/i, 'mar')
+        .replace(/mercoled(ì|i)/i, 'mer')
+        .replace(/gioved(ì|i)/i, 'gio')
+        .replace(/venerd(ì|i)/i, 'ven')
         .replace(/sabato/i, 'sab')
         .replace(/domenica/i, 'dom')
         .replace(/([A-Za-z])[^\w]+(\d)/, '$1 $2')
         .replace(/(\d)[^0-9 -]+(\d)/g, '$1:$2')
-        .replace(/(\s\d+)(\s|$)/, '$1:00')
+        .replace(/(\s\d+)(\s|$)/g, '$1:00 ')
         .replace(/(\d+)[^\w:]+(\d+)/, '$1 - $2');
       switch (type) {
         case 1:

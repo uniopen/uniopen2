@@ -14,34 +14,62 @@
 
         let $ = parseHtml(source);
 
-        let sections = $('div.accordion-head.accordion-a.clearfix p');
+        let timeSanitize = (o) => {
+          return o.replace(/da /g,"")
+          .replace(/\ba\b/g,"-")
+          .replace(/dalle ore/gi,"")
+          .replace(/alle ore/gi,"-")
+          .replace(/dalle/gi,"")
+          .replace(/alle/gi,"-")
+          .replace(/all'/gi,"- ")
+          .replace(/di notte/gi,"");
+        }
 
+        /* TODO:
+        * - fix area agripoli e vicenza in quanto aule unite e divise in li stesso livello padre
+        * - improve parsing, think a better way to do it
+        */
+        
+        let sections = $('div.accordion-head.accordion-a.clearfix p.hidden-content');
+        let ts = '';
         sections.each((index, section) => {
 
-          let nome = $(section).find('strong').remove().text();
-          $(section).find('br').replaceWith(';');
+            $(section).find('a').remove();
+            $(section).find('br').replaceWith('$');
 
-          let testo = $(section).text()
-            .replace(/\(Posti[\sA-Za-z.]*(\d+)\).*Indirizzo: (.*)Tel.*:(.*)/, "$1;$2;$3")
-            .replace(/da /g,"")
-            .replace(/\ba\b/g,"-")
-            .replace(/dalle ore/gi,"")
-            .replace(/alle ore/gi,"-")
-            .replace(/di notte/gi,"");
+            let testo = $(section).text().split('$');
 
-          let key = rawkey(args.uni, args.type, nome);
-          let el = testo.split(";");
-          let posti = el.shift();
-          let address = el.shift();
+            let nome = null, posti = null,
+                indirizzo = null, orario = null;
 
-          el.forEach((item,index)=>{
-            el[index] = normalizeTimetable(item);
-          });
+            nome = testo.shift();
 
-          commitData(args.uni, args.type, args.code, args.url, key, { nome: nome, indirizzo: address, posti: posti, orari: el});
+            testo.forEach((item, index)=>{
+              switch (true) {
+                case (/Posti/.test(item)):
+                  posti = item.match(/\d+/)[0];
+                  break;
+                case (/Indirizzo:/.test(item)):
+                  indirizzo = item.match(/Indirizzo:\s*(.*)(?:\s*-\s*)/)[1];
+                  break;
+                case (/Orario di apertura:/.test(item)):
+                  orari = timeSanitize(item.match(/Orario di apertura:(.*)/)[1]);
+                  orari = orari.split(';');
+                  orari.forEach((item, index) => {
+                    orari[index] = normalizeTimetable(item);
+                  });
+                  break;
+                default:
+
+              }
+            });
+            if(nome != null && indirizzo != null ) {
+              let key = rawkey(args.uni, args.type, nome);
+              commitData(args.uni, args.type, args.code, args.url, key, { nome: nome, indirizzo: indirizzo, posti: posti, orari: orari});
+            }
+
 
         });
-
     }).catch((err) => {
 
         console.error(err.message, err.stack);
