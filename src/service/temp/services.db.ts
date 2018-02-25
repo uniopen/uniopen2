@@ -1,40 +1,21 @@
 import * as Promise from 'bluebird';
 import { each, find, isObject, map } from 'lodash';
+import { readFile } from 'fs';
+import { join } from 'path';
+import * as fs from 'fs';
 
 export class ServicesDb {
+
     public static findAll(): Promise<any[]> {
-        return Promise.try(() => {
-            return [{
-                id: '3d540092-1e28-44eb-bda9-4558116b02c6',
-                code: 'unipd',
-                name: 'Università degli studi di Padova',
-                objects: [
-                  {
-                    type: 'studio',
-                    code: 'default',
-                    urls: ['http://www.unipd.it/aule-studio'],
-                  },
-                  {
-                    type: 'biblio',
-                    code: 'start',
-                    urls: ['http://bibliotecadigitale.cab.unipd.it/biblioteche/elenco-delle-biblioteche'],
-                  },
-                ],
-            }, {
-                id: '0819d80a-39dc-4d7f-80ab-9071d97ee73b',
-                code: 'unive',
-                name: `Università Ca' Foscari Venezia`,
-                objects: [{
-                    type: 'mensa',
-                    code: 'default',
-                    urls: ['http://www.esuvenezia.it/web/esuvenezia/servizi/servizi-interna?p_p_id=ALFRESCO_MYPORTAL_CONTENT_PROXY_WAR_myportalportlet_INSTANCE_l6Hb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&template=/regioneveneto/myportal/html-generico-detail&uuid=01acd1dc-bf22-431d-b07c-a72f3535c498&contentArea=_ESUVenezia_servizi-interna_Body1_&selVert=menu-contestuale_709349e4-ef47-4251-bb50-624e4b22da37'],
-                },
-                {
-                    type: 'biblio',
-                    code: 'default',
-                    urls: ['http://www.unive.it/pag/4750/'],
-                },],
-            }];
+        return new Promise((resolve, reject) => {
+          let obj: any;
+          let base: string = process.env.SCRIPT_PATH || './grabber';
+          let path = join(__dirname, '../../..', base, 'config.json');
+          return readFile(path, 'utf8', (err: Error, data: string) => {
+            if (err) { reject(err); }
+            return resolve(JSON.parse(data));
+          });
+
         });
     }
 

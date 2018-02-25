@@ -10,7 +10,6 @@ services:
     ports:
       - '127.0.0.1:5000:5000'
     volumes:
-      - ./src:/uo2/src/
       - ./grabber:/uo2/grabber
       - node:/uo2/node_modules
     links:
@@ -32,4 +31,4 @@ services:
     image: redis:latest
     expose:
       - '6379'
-    command: redis-server 
+    command: redis-server

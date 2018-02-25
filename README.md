@@ -22,7 +22,7 @@ Anyway if you prefer a no-docker use of the project you'll need to have these so
 
 We will guide you through both of use cases.
 
-### Docker ( Linux, MacOS, Windows )
+## Docker ( Linux, MacOS, Windows )
 
 First of all we assume that you have docker and docker-compose installed.
 If it's not your case, follow installation guide on https://docs.docker.com/compose/install/
@@ -180,7 +180,7 @@ Usually these urls represent main pages of different categories (i.e. libraries 
 
 Let's get started with the actual instructions:
 
-* open ```src/service/temp/services.db.ts```, as you can see, in this file there is an array that contains a list of universities, each of them contains an array of objects that represent different categories. If you want to add a grabber, you have to put in the relative university's array (if your university is not present, simply add it with the same structure of the others) a new object with:
+* open ```grabber/config.json```, as you can see, in this file there is an array that contains a list of universities, each of them contains an array of objects that represent different categories. If you want to add a grabber, you have to put in the relative university's array (if your university is not present, simply add it with the same structure of the others) a new object with:
   * type: the name of the chosen category, also the name of the folder where you have to put your grabber.
   * code: the name of the main grabber for the category.
   * urls: the list of urls necessary to your grabber.
