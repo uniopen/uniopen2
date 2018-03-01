@@ -17,6 +17,7 @@ export class BiblioSchemaBuilder implements IBuilder {
                 indirizzo: Joi.string(),
                 note: Joi.string().optional(),
                 posti: Joi.number().positive().optional(),
+                posti_occupati: Joi.number().min(0).optional(),
                 orari: new OrariSchemaBuilder().build().optional(),
             }),
             created: Joi.date(),

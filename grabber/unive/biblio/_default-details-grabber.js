@@ -1,4 +1,4 @@
-//http://www.unive.it/pag/4756/
+//http://www.unive.it/pag/4757/
 
 (function (args) {
 
@@ -10,21 +10,17 @@
             return res.text();
         })
         .then((source) => {
-            console.log('grabber - parsing CFZ >>>')
+            console.log('grabber - parsing ' + args.key + ' >>>')
             let $ = parseHtml(source);
 
             let pagecontent = $('#page_content');
 
-            let address = pagecontent.find('h4').first().text(); //how to exclude inner tag?
+            let address = pagecontent.find('.lead').text(); //how to exclude inner tag?
 
             //return a human-readable string like "lun-ven: 9.00-24.00"
-            let timetable = pagecontent.find('.panel-body').find('.col-md-4').first().find('p')[1].innerText;  //TODO NOT WORKING
+            let timetable = normalizeTimetable(pagecontent.find('.panel-body').find('.dl-horizontal').first().text());
 
-
-            //console.log("---- CFZ ---- " + JSON.stringify(temp_timetable[1]))
-
-
-            commitData(args.uni, args.type, args.code, args.url, args.key, { indirizzo: address, orari: [] });
+            commitData(args.uni, args.type, args.code, args.url, args.key, { indirizzo: address, orari: timetable });
 
         }).catch((err) => {
 
