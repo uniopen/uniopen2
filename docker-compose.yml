@@ -15,13 +15,13 @@ services:
       - node:/uo2/node_modules
     links:
       - redis
-      - mongodb
+      - uniopen2-db
     depends_on:
       - redis
-      - mongodb
+      - uniopen2-db
 
-  mongodb:
-    image: mongo:latest
+  uniopen2-db:
+    image: mongo:3.6
     restart: always
     volumes:
       - './data:/data/db'
@@ -30,7 +30,7 @@ services:
     command: mongod --smallfiles --logpath=/dev/null
 
   redis:
-    image: redis:latest
+    image: redis:4.0-alpine
     restart: always
     expose:
       - '6379'
