@@ -7,6 +7,7 @@ services:
   uo2:
     build: .
     command: npm run dev
+    restart: always
     ports:
       - '127.0.0.1:5000:5000'
     volumes:
@@ -21,6 +22,7 @@ services:
 
   mongodb:
     image: mongo:latest
+    restart: always
     volumes:
       - './data:/data/db'
     expose:
@@ -29,6 +31,7 @@ services:
 
   redis:
     image: redis:latest
+    restart: always
     expose:
       - '6379'
     command: redis-server
