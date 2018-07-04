@@ -4,4 +4,5 @@ COPY tsconfig.json package.json package-lock.json Procfile ./
 COPY .env.docker ./.env
 RUN npm install; mkdir /uniopen2-logs
 COPY ./src ./src
+COPY ./grabber ./grabber
 CMD ["npm", "start"]
