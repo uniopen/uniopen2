@@ -1,6 +1,6 @@
 {
   "name": "w-uniopenl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Uniopen",
   "main": "./build/application.js",
   "scripts": {

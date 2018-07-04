@@ -1,15 +1,15 @@
 import * as Promise from 'bluebird';
-import { inject, injectable } from 'inversify';
+import {inject, injectable} from 'inversify';
 
-import { IConfigManager } from '../framework/config/IConfigManager';
-import { IComponent } from '../framework/interface/IComponent';
-import { IServerRequest } from '../framework/interface/IServerRequest';
-import { IServerResponse } from '../framework/interface/IServerResponse';
-import { ILoggerManager } from '../framework/logger/ILoggerManager';
-import { Hapi } from '../framework/server/Hapi';
-import { asyncInit } from '../inversify/_decorator';
-import { getSymbol, PRIORITY_LOW } from '../inversify/_helper';
-import { RestManager } from '../service/manager/RestManager';
+import {IConfigManager} from '../framework/config/IConfigManager';
+import {IComponent} from '../framework/interface/IComponent';
+import {IServerRequest} from '../framework/interface/IServerRequest';
+import {IServerResponse} from '../framework/interface/IServerResponse';
+import {ILoggerManager} from '../framework/logger/ILoggerManager';
+import {Hapi} from '../framework/server/Hapi';
+import {asyncInit} from '../inversify/_decorator';
+import {getSymbol, PRIORITY_LOW} from '../inversify/_helper';
+import {RestManager} from '../service/manager/RestManager';
 
 @injectable()
 export class HapiAdapter implements IComponent {
@@ -20,7 +20,8 @@ export class HapiAdapter implements IComponent {
         @inject(getSymbol('ConfigManager')) private config: IConfigManager,
         @inject(getSymbol('LoggerManager')) private log: ILoggerManager,
         @inject(getSymbol('RestManager')) private rest: RestManager,
-        @inject(getSymbol('Hapi')) private hapi: Hapi) { }
+        @inject(getSymbol('Hapi')) private hapi: Hapi) {
+    }
 
     @asyncInit(PRIORITY_LOW)
     public init(): Promise<void> {
@@ -60,20 +61,20 @@ export class HapiAdapter implements IComponent {
 
     private homeHandler = (req: IServerRequest, h: IServerResponse) => {
         return h.response('Welcome to uo2 api').code(200);
-    }
+    };
 
     private apiHandler = (req: IServerRequest, h: IServerResponse) => {
         // TODO: usare i tipi corretti "IActionInput"
-        return this.rest.run({ action: req.params.service, body: req.params.data })
-        .then((value) => h
-          .response({ statusCode: 200, message: value })
-          .code(200),
-        )
-        .catch((err) => h
-          .response({ statusCode: 404, error: 'Not Found', message: 'Not Found'})
-          .code(404),
-        );
+        return this.rest.run({action: req.params.service, body: req.params.data})
+            .then((value) => h
+                .response({statusCode: 200, message: value})
+                .code(200),
+            )
+            .catch((err) => h
+                .response({statusCode: 404, error: 'Not Found', message: 'Not Found'})
+                .code(404),
+            );
 
-    }
+    };
 
 }

@@ -1,15 +1,13 @@
 import * as Promise from 'bluebird';
-import { inject, injectable } from 'inversify';
-import { trimEnd, filter } from 'lodash';
+import {inject, injectable} from 'inversify';
+import {trimEnd} from 'lodash';
 
-import { IConfigManager } from '../../framework/config/IConfigManager';
-import { IComponent } from '../../framework/interface/IComponent';
-import { ILoggerManager } from '../../framework/logger/ILoggerManager';
-import { asyncInit } from '../../inversify/_decorator';
-import { getSymbol, PRIORITY_LOW } from '../../inversify/_helper';
-import { ServicesDb } from '../temp/services.db';
-import { UniDataDao } from '../../dao/UniDataDao';
-import { IUniData } from '../../domain/IUniData';
+import {IConfigManager} from '../../framework/config/IConfigManager';
+import {IComponent} from '../../framework/interface/IComponent';
+import {ILoggerManager} from '../../framework/logger/ILoggerManager';
+import {asyncInit} from '../../inversify/_decorator';
+import {getSymbol, PRIORITY_LOW} from '../../inversify/_helper';
+import {UniDataDao} from '../../dao/UniDataDao';
 
 @injectable()
 export class GetDataAction implements IComponent {

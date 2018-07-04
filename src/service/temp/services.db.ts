@@ -37,17 +37,17 @@ export class ServicesDb {
             then((services: any[]) => {
                 let list: any[] = [];
                 each(services, (service: any) => {
-                    if(input[0] === service.code){
-                        //Se è specificata solo l'università, aggiungo tutti i grabber di quell'università
-                        if(input.length === 1)
+                    if (input[0] === service.code){
+                        // Se è specificata solo l'università, aggiungo tutti i grabber di quell'università
+                        if (input.length === 1)
                             each(service.objects, (object: any) => {
                                 list.push({ uni: service.code, type: object.type });
                             });
-                        //Altrimenti aggiungo solo i grabber del tipo specificato
-                        else if(input.length >= 2)
+                        // Altrimenti aggiungo solo i grabber del tipo specificato
+                        else if (input.length >= 2)
                             each(service.objects, (object: any) => {
-                                if(input[1] === object.type){
-                                    console.log("Aggiunto " + object.type + " per " + service.code + " alla lista" )
+                                if (input[1] === object.type){
+                                    console.log('Aggiunto ' + object.type + ' per ' + service.code + ' alla lista' );
                                     list.push({ uni: service.code, type: object.type });
                                 }
                             });
